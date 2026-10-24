@@ -1,0 +1,17 @@
+# Render deployment for Muse Agent MCP
+# In Render: New -> Web Service -> connect this folder/repo, or use this
+# blueprint. Set MCP_BEARER_TOKEN as an environment variable in Render
+# (never commit it). Render provides HTTPS automatically.
+# NOTE: This exposes the queue server only. For Claude you still need a
+# real OAuth 2.1 provider in front of /mcp (see DEPLOY.md).
+services:
+  - type: web
+    name: muse-agent-mcp
+    env: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: MCP_BEARER_TOKEN
+        sync: false
